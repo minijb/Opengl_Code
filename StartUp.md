@@ -12,3 +12,9 @@ cmake 快速配置文件: `Cmake Quick`
 ### 1. glfw
 
 [website](https://www.glfw.org/download.html)
+
+注意 如果使用MSYS，使用Mingw编译版本
+
+### 2. glad
+
+[website](https://glad.dav1d.de/)
