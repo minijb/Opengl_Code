@@ -22,7 +22,7 @@ set(GLFW_DIR ${PROJECT_SOURCE_DIR}/lib/glfw)
 
 
 # source file
-file(GLOB_RECURSE SRC_FILES ${PROJECT_SOURCE_DIR}/src/*.cpp ${GLAD_DIR}/*.c)
+file(GLOB_RECURSE SRC_FILES ${PROJECT_SOURCE_DIR}/src/*.cpp ${GLAD_DIR}/*.c ${PROJECT_SOURCE_DIR}/src/*.h)
 
 message(STATUS "SRC_FILES: ${SRC_FILES}")
 
