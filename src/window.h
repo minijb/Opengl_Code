@@ -9,6 +9,7 @@ class Window{
         Window(int width, int height);
         ~Window();
 
+        void ProcessInput();
 
     private:
         int Height;

@@ -25,6 +25,10 @@ Window::Window(int width, int height):Width(width), Height(height){
     GladInit();
 }
 
+Window::~Window(){
+    glfwTerminate();
+}
+
 void Window::GlfwInit(){
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -59,8 +63,9 @@ void Window::GladInit(){
 }
 
 
-
-Window::~Window(){
-    glfwTerminate();
+void Window::ProcessInput(){
+    if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+        glfwSetWindowShouldClose(window, true);
 }
+
 #pragma endregion
