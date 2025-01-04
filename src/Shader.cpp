@@ -56,7 +56,7 @@ void ShaderProgram::Link(){
     Debug();
 }
 
-void ShaderProgram::Use(){
+void ShaderProgram::Use() const{
     glUseProgram(programId);
 }
 

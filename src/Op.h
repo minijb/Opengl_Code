@@ -1,4 +1,5 @@
 #include "VAO.h"
 #include "VBO.h"
+#include "EBO.h"
 #include "Shader.h"
 #include "window.h"

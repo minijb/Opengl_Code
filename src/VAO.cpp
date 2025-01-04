@@ -18,7 +18,7 @@ void VAO::VAOInit()
     glGenVertexArrays(1, &index);
 }
 
-void VAO::Bind()
+void VAO::Bind() const
 {
     glBindVertexArray(index);
 }

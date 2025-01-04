@@ -28,6 +28,6 @@ public:
     ~ShaderProgram();
     void AttachShader(Shader&);
     void Link();
-    void Use();
+    void Use() const;
     void Deleted();
 };

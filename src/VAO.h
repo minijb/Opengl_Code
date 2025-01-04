@@ -11,7 +11,7 @@ private:
 public:
     VAO();
     ~VAO();
-    void Bind();
+    void Bind() const;
     void UnBind();
     void Deleted();
 };
