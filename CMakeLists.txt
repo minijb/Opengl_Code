@@ -24,6 +24,9 @@ set(GLFW_DIR ${PROJECT_SOURCE_DIR}/lib/glfw)
 # source file
 file(GLOB_RECURSE SRC_FILES ${PROJECT_SOURCE_DIR}/src/*.cpp ${GLAD_DIR}/*.c ${PROJECT_SOURCE_DIR}/src/*.h)
 
+# shader files
+file(COPY ${PROJECT_SOURCE_DIR}/src/shader DESTINATION ${PROJECT_BINARY_DIR}/shader)
+
 message(STATUS "SRC_FILES: ${SRC_FILES}")
 
 

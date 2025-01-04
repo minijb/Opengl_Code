@@ -27,12 +27,10 @@ int main(){
         -0.5f, -0.5f, 0.0f, // 左下角
         -0.5f, 0.5f, 0.0f   // 左上角
     };
-    unsigned int indices[] = {
-        // 注意索引从0开始! 
-        // 此例的索引(0,1,2,3)就是顶点数组vertices的下标，
-        // 这样可以由下标代表顶点组合成矩形
-
-        0, 1, 3, // 第一个三角形
+    unsigned int indices1[] = {
+        0, 1, 3 // 第一个三角形
+    };
+    unsigned int indices2[] = {
         1, 2, 3  // 第二个三角形
     };
 
@@ -51,9 +49,15 @@ int main(){
     vbo.BufferData(vertices, sizeof(vbo));
     vbo.UnBind();
 
-    EBO ebo;
-
+    EBO ebo1;
+    ebo1.Bind();
+    ebo1.BufferData(indices1, sizeof(indices1));
+    ebo1.UnBind();
     
+    EBO ebo2;
+    ebo2.Bind();
+    ebo2.BufferData(indices2, sizeof(indices2));
+    ebo2.UnBind();
 
     VAO vao;
     vao.Bind();
@@ -64,12 +68,13 @@ int main(){
     glEnableVertexAttribArray(0);
     vbo.UnBind();
 
-    // in vao bind ebo
-    ebo.Bind();
-    ebo.BufferData(indices, sizeof(indices));
+    // in vao bind ebo1
+    ebo1.Bind();
+    ebo2.Bind();
 
     vao.UnBind();
-    ebo.UnBind();
+    ebo1.UnBind();
+    ebo2.UnBind();
 
     
 
