@@ -1,6 +1,7 @@
 #include <glad/glad.h>
 #include <iostream>
 #include <fstream>
+#include <sstream>
 
 enum class ShaderType{
     VERTEX_SHADER = GL_VERTEX_SHADER,
@@ -18,7 +19,7 @@ public:
     Shader(ShaderType type);
     ~Shader();
     void Compile(const char*);
-    void Compile(std::ifstream);
+    void Compile(std::ifstream&&);
     void Deleted();
 };
 
@@ -33,6 +34,7 @@ public:
     ShaderProgram();
     ~ShaderProgram();
     void AttachShader(Shader&);
+    void ShaderConfig(std::ifstream &&vStream, std::ifstream &&fStream);
     void Link();
     void Use() const;
     void Deleted();
@@ -42,4 +44,5 @@ public:
     void setInt(const char*, int) const;
     void setFloat(const char*, float) const;
     void setBool(const char*, bool) const;  
+    void set3f(const char*, float, float, float) const;
 };

@@ -19,14 +19,9 @@ int main(){
         0, 1, 2 // 第一个三角形
     };
 
-    Shader v_shader(ShaderType::VERTEX_SHADER);
-    v_shader.Compile(std::ifstream("./out/shader/v1.glsl"));
-    Shader f_shader(ShaderType::FRAGMENT_SHADER);
-    f_shader.Compile(std::ifstream("./out/shader/f1.glsl"));
 
     ShaderProgram shaderProgram;
-    shaderProgram.AttachShader(v_shader);
-    shaderProgram.AttachShader(f_shader);
+    shaderProgram.ShaderConfig(std::ifstream("./shader/v1.glsl"), std::ifstream("./shader/f1.glsl"));
     shaderProgram.Link();
 
     VBO vbo;

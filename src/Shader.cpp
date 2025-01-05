@@ -33,17 +33,15 @@ void Shader::Compile(const char* shaderSource){
     Debug();
 }
 
-void Shader::Compile(std::ifstream file){
+void Shader::Compile(std::ifstream &&file){
     if(file.fail()){
         std::cout << "ERROR::SHADER::FILE_NOT_SUCCESFULLY_READ" << std::endl;
         return;
     }
     std::string shaderSource;
-    std::string line;
-    while (std::getline(file, line))
-    {
-        shaderSource += line + '\n';
-    }
+    std::stringstream shaderS;
+    shaderS << file.rdbuf();
+    shaderSource = shaderS.str();
     const char* shaderSourceChar = shaderSource.c_str();
     glShaderSource(shaderId, 1, &shaderSourceChar, NULL);
     glCompileShader(shaderId);
@@ -87,6 +85,15 @@ void ShaderProgram::Link(){
     Debug();
 }
 
+
+// TODO use 完美转发
+void ShaderProgram::ShaderConfig(std::ifstream &&vStream, std::ifstream &&fStream){
+    vertexShader.Compile(std::move(vStream));
+    fragmentShader.Compile(std::move(fStream));
+    AttachShader(vertexShader);
+    AttachShader(fragmentShader);
+}
+
 void ShaderProgram::Use() const{
     glUseProgram(programId);
 }
@@ -120,4 +127,8 @@ void ShaderProgram::setFloat(const char* name, float value) const{
 
 void ShaderProgram::setBool(const char* name, bool value) const{
     glUniform1i(glGetUniformLocation(programId, name), value);
+}
+
+void ShaderProgram::set3f(const char* name, float v0, float v1, float v2) const{
+    glUniform3f(glGetUniformLocation(programId, name), v0, v1, v2);
 }
