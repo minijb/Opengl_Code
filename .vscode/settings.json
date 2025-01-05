@@ -62,5 +62,8 @@
     "opengl",
     "Shaderiv",
     "ucrt"
-  ]
+  ],
+  "files.associations": {
+    "cmath": "cpp"
+  }
 }

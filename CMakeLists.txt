@@ -25,12 +25,12 @@ set(GLFW_DIR ${PROJECT_SOURCE_DIR}/lib/glfw)
 file(GLOB_RECURSE SRC_FILES ${PROJECT_SOURCE_DIR}/src/*.cpp ${GLAD_DIR}/*.c ${PROJECT_SOURCE_DIR}/src/*.h)
 
 # shader files
-file(COPY ${PROJECT_SOURCE_DIR}/src/shader DESTINATION ${PROJECT_BINARY_DIR}/shader)
+file(REMOVE ${PROJECT_BINARY_DIR}/shader)
+file(COPY ${PROJECT_SOURCE_DIR}/src/shader DESTINATION ${PROJECT_BINARY_DIR})
 
-message(STATUS "SRC_FILES: ${SRC_FILES}")
-
+message(STATUS ${PROJECT_BINARY_DIR})
 
 add_executable(${PROJECT_NAME} ${SRC_FILES})
 target_include_directories(${PROJECT_NAME} PUBLIC ${INCLUDE_DIR})
 target_link_directories(${PROJECT_NAME} PUBLIC ${GLFW_DIR})
-target_link_libraries(${PROJECT_NAME} glfw3 openGL32)
+target_link_libraries(${PROJECT_NAME} glfw3.dll openGL32)

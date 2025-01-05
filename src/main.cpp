@@ -1,20 +1,8 @@
 #include "Op.h"
+#include <math.h>
 
 void Rendering();
 void Rendering(const ShaderProgram &sp, const VAO &vao);
-
-const char *vertexShaderSource = "#version 330 core\n"
-    "layout (location = 0) in vec3 aPos;\n"
-    "void main()\n"
-    "{\n"
-    "   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
-    "}\0";
-const char *fragmentShaderSource = "#version 330 core\n"
-    "out vec4 FragColor;\n"
-    "void main()\n"
-    "{\n"
-    "   FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
-    "}\n\0";
 
 
 int main(){
@@ -22,22 +10,19 @@ int main(){
 
 
     float vertices[] = {
-        0.5f, 0.5f, 0.0f,   // 右上角
-        0.5f, -0.5f, 0.0f,  // 右下角
-        -0.5f, -0.5f, 0.0f, // 左下角
-        -0.5f, 0.5f, 0.0f   // 左上角
+        // 位置              // 颜色
+        0.5f, -0.5f, 0.0f,  1.0f, 0.0f, 0.0f,   // 右下
+        -0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,   // 左下
+        0.0f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f    // 顶部
     };
     unsigned int indices1[] = {
-        0, 1, 3 // 第一个三角形
-    };
-    unsigned int indices2[] = {
-        1, 2, 3  // 第二个三角形
+        0, 1, 2 // 第一个三角形
     };
 
-    Shader v_shader(VERTEX_SHADER);
-    v_shader.Compile(vertexShaderSource);
-    Shader f_shader(FRAGMENT_SHADER);
-    f_shader.Compile(fragmentShaderSource);
+    Shader v_shader(ShaderType::VERTEX_SHADER);
+    v_shader.Compile(std::ifstream("./out/shader/v1.glsl"));
+    Shader f_shader(ShaderType::FRAGMENT_SHADER);
+    f_shader.Compile(std::ifstream("./out/shader/f1.glsl"));
 
     ShaderProgram shaderProgram;
     shaderProgram.AttachShader(v_shader);
@@ -54,27 +39,26 @@ int main(){
     ebo1.BufferData(indices1, sizeof(indices1));
     ebo1.UnBind();
     
-    EBO ebo2;
-    ebo2.Bind();
-    ebo2.BufferData(indices2, sizeof(indices2));
-    ebo2.UnBind();
+
 
     VAO vao;
     vao.Bind();
     
     // in vao bind buffer
     vbo.Bind();
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+    // 位置属性
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
+    // 颜色属性
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3* sizeof(float)));
+    glEnableVertexAttribArray(1);
     vbo.UnBind();
 
     // in vao bind ebo1
     ebo1.Bind();
-    ebo2.Bind();
 
     vao.UnBind();
     ebo1.UnBind();
-    ebo2.UnBind();
 
     
 
@@ -95,7 +79,10 @@ int main(){
 }
 
 void Rendering(const ShaderProgram &sp, const VAO &vao){
+    float timeValue = glfwGetTime();
+    float greenValue = (sin(timeValue) / 2.0f) + 0.5f;
+    sp.set4f("ourColor", 0.0f, greenValue, 0.0f, 1.0f);
     sp.Use();
     vao.Bind();
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+    glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
 }
